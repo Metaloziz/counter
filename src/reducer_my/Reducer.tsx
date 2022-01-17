@@ -63,7 +63,7 @@ export const reducer = (state: statePT = initialState, action: actionPT): stateP
                 ...state,
                 presentValue: state.settingMinValue,
                 minValue: state.settingMinValue,
-                maxValue: state.settingMaxValue
+                maxValue: state.settingMaxValue,
             }
         case SET_MAX:
             return {...state, settingMaxValue: action.max}

@@ -1,7 +1,7 @@
 import s from './DisplayContainer.module.css'
 import {Button} from "../Button/Button";
-import React from "react";
-import {addAC, resAC, statePT} from "../../reducer_my/Reducer";
+import React, {useEffect} from "react";
+import {addAC, resAC, setAC, setMaxAC, setMinAC, statePT} from "../../reducer_my/Reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../bll/store";
 
@@ -16,21 +16,40 @@ type DisplayContainerPT = {
 export const DisplayContainer = React.memo(({titleADD, titleRES}: DisplayContainerPT) => {
 
     console.log('DisplayContainer')
-
     let state = useSelector<AppStateType, statePT>(store => store.counter)
-    let dispatch = useDispatch()
+    let dispatch = useDispatch();
+
+
+    useEffect(() => {
+        // debugger
+
+        let newMax = localStorage.getItem('max')
+        let newMin = localStorage.getItem('min')
+
+        if (newMax && newMin) {
+            dispatch(setMaxAC(+newMax))
+            dispatch(setMinAC(+newMin))
+            dispatch(setAC())
+        }
+
+    }, [])
+
+    // useEffect(() => {
+    //     localStorage.setItem('min', JSON.stringify(state.settingMinValue))
+    //     localStorage.setItem('max', JSON.stringify(state.settingMaxValue))
+    // }, [])
 
 
     // useEffect(() => {
     //
     //     console.log('useEffect')
     //
-    //     let newMin = localStorage.getItem('min')
     //     let newMax = localStorage.getItem('max')
+    //     let newMin = localStorage.getItem('min')
     //
     //     if (newMax && newMin) {
-    //         dispatch(setMaxAC(+newMax))
-    //         dispatch(setMinAC(+newMin))
+    //         dispatch(setMaxAC(JSON.parse(newMax)))
+    //         dispatch(setMinAC(JSON.parse(newMin)))
     //     }
     // }, [])
 

@@ -1,42 +1,57 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useEffect} from "react";
 import s from './SettingContainer.module.css'
 import {Button} from "../Button/Button";
-import {disableSettingButtonAC, setAC, setMaxAC, setMinAC, setSettingErrorAC, statePT} from "../../reducer_my/Reducer";
+import {
+    actionPT,
+    disableSettingButtonAC,
+    setAC,
+    setMaxAC,
+    setMinAC,
+    setSettingErrorAC,
+    statePT
+} from "../../reducer_my/Reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../bll/store";
 
 
 type SettingContainerPT = {
-    // state: statePT
     titleSET: string
-    // dispatch: (action: actionPT) => void
 }
 
 export const SettingContainer = React.memo(({titleSET}: SettingContainerPT) => {
+
     console.log('SettingContainer')
 
     let state = useSelector<AppStateType, statePT>(store => store.counter)
     let dispatch = useDispatch()
 
 
-    // useEffect(() => {
-    //     localStorage.setItem('min', JSON.stringify(state.settingMinValue))
-    //     localStorage.setItem('max', JSON.stringify(state.settingMaxValue))
-    // }) // error ????????????/
+    useEffect(() => {
 
+        let newMax = localStorage.getItem('max')
+        let newMin = localStorage.getItem('min')
 
-    if (state.minValue === state.settingMinValue
-        && state.maxValue === state.settingMaxValue
-        && !state.disableSettingButton) {
-        dispatch(disableSettingButtonAC(true))
-    }
-
-    if (state.settingMinValue === state.settingMaxValue && !state.disableSettingButton) {
-        if (!state.settingError) {
-            dispatch(setSettingErrorAC(true))
+        if (newMax && newMin) {
+            dispatch(setMaxAC(JSON.parse(newMax)))
+            dispatch(setMinAC(JSON.parse(newMin)))
         }
-        dispatch(disableSettingButtonAC(true))
-    }
+    }, [])
+
+
+    useEffect(() => {
+        if (state.minValue === state.settingMinValue
+            && state.maxValue === state.settingMaxValue
+            && !state.disableSettingButton) {
+            dispatch(disableSettingButtonAC(true))
+        }
+
+        if (state.settingMinValue === state.settingMaxValue && !state.disableSettingButton) {
+            if (!state.settingError) {
+                dispatch(setSettingErrorAC(true))
+            }
+            dispatch(disableSettingButtonAC(true))
+        }
+    })
 
     const maxCB = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setSettingErrorAC(false))
@@ -49,6 +64,13 @@ export const SettingContainer = React.memo(({titleSET}: SettingContainerPT) => {
         dispatch(setMinAC(+e.currentTarget.value))
     }
 
+    const localSetCB = (action: actionPT) => {
+
+        localStorage.setItem('min', JSON.stringify(state.settingMinValue))
+        localStorage.setItem('max', JSON.stringify(state.settingMaxValue))
+
+        dispatch(action)
+    }
 
     return (
         <div className={s.app}>
@@ -66,7 +88,7 @@ export const SettingContainer = React.memo(({titleSET}: SettingContainerPT) => {
             <div className={s.set}>
                 <Button disabled={state.disableSettingButton}
                         action={setAC}
-                        dispatch={dispatch}
+                        dispatch={localSetCB}
                         title={titleSET}/>
             </div>
         </div>

@@ -11,7 +11,10 @@ export type buttonPT = {
 
 export const Button = React.memo(({title, dispatch, action, disabled}: buttonPT) => {
 
-    const callback = () => dispatch(action())
+    const callback = () => {
+        console.log('click')
+        dispatch(action())
+    }
 
     return <div>
         <button disabled={disabled} onClick={callback}>{title}</button>
