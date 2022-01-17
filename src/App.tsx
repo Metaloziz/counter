@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.module.css';
+import s from "./App.module.css";
+import {DisplayContainer} from "./components/DisplayContainer/DisplayContainer";
+import {SettingContainer} from "./components/SettingContainer/SettingContainer";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {NavigateHeader} from "./components/Navigate/Navigate";
+import {ADD, RES, SET} from "./reducer_my/Reducer";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    // const [state, dispatch] = useReducer(reducer, initialState)
+
+    return (
+        <>
+            <NavigateHeader/>
+            <div className={s.main}>
+                <Routes>
+                    <Route path={'/*'} element={<Navigate replace to={"/1"}/>}/>
+                    <Route path={'/1'} element={
+                        <DisplayContainer titleADD={ADD} titleRES={RES}/>}
+                    />
+                    <Route path={'/2'} element={
+                        <SettingContainer titleSET={SET}/>}
+                    />
+                </Routes>
+            </div>
+        </>
+    );
 }
 
 export default App;

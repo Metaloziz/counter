@@ -1,0 +1,7 @@
+.buttons {
+    background-color: #106c5f;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 2%;
+}
