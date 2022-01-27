@@ -4,7 +4,7 @@ type AllActionsType = AddACT
 
 type AddACT = ReturnType<typeof addAC>
 
-const addAC = () => ({type: ADD} as const)
+export const addAC = () => ({type: ADD} as const)
 
 
 type initialStateType = {
