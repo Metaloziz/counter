@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
-import {store} from "./bll/store";
+import Counter from "./counterSingle/Counter";
+import {newStore} from "./counterSingle/counter-store";
 
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
-            <Provider store={store}>
-                <App/>
+            <Provider store={newStore}>
+                {/*<App/>*/}
+                <Counter/>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>,
