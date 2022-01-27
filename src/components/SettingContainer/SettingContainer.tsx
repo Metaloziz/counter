@@ -25,7 +25,6 @@ export const SettingContainer = React.memo(({titleSET}: SettingContainerPT) => {
     let state = useSelector<AppStateType, statePT>(store => store.counter)
     let dispatch = useDispatch()
 
-
     useEffect(() => {
 
         let newMax = localStorage.getItem('max')

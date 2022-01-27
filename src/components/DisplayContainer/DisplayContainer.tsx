@@ -16,12 +16,11 @@ type DisplayContainerPT = {
 export const DisplayContainer = React.memo(({titleADD, titleRES}: DisplayContainerPT) => {
 
     console.log('DisplayContainer')
+
     let state = useSelector<AppStateType, statePT>(store => store.counter)
     let dispatch = useDispatch();
 
-
     useEffect(() => {
-        // debugger
 
         let newMax = localStorage.getItem('max')
         let newMin = localStorage.getItem('min')
@@ -34,29 +33,9 @@ export const DisplayContainer = React.memo(({titleADD, titleRES}: DisplayContain
 
     }, [])
 
-    // useEffect(() => {
-    //     localStorage.setItem('min', JSON.stringify(state.settingMinValue))
-    //     localStorage.setItem('max', JSON.stringify(state.settingMaxValue))
-    // }, [])
-
-
-    // useEffect(() => {
-    //
-    //     console.log('useEffect')
-    //
-    //     let newMax = localStorage.getItem('max')
-    //     let newMin = localStorage.getItem('min')
-    //
-    //     if (newMax && newMin) {
-    //         dispatch(setMaxAC(JSON.parse(newMax)))
-    //         dispatch(setMinAC(JSON.parse(newMin)))
-    //     }
-    // }, [])
-
 
     let disableForAdd = state.presentValue === state.maxValue
     let disableForRes = state.presentValue === state.minValue
-
 
     return (<div className={s.app}>
             <div className={state.presentValue === state.maxValue ? s.end : s.display}>
